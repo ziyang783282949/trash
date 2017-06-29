@@ -1,7 +1,9 @@
 package login;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,12 +39,13 @@ public class logInfo extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String userName=new String(request.getParameter("name").getBytes("ISO-8859-1"),"UTF-8");
+		/*String userName=new String(request.getParameter("name").getBytes("ISO-8859-1"),"UTF-8");
 		String passWord=new String(request.getParameter("password").getBytes("ISO-8859-1"),"UTF-8");
 		if(userName!=null && !"".equals(userName) && passWord!=null && !"".equals(passWord)){
 			
 		}
-		System.out.println("–’√˚:"+userName+"√‹¬Î"+passWord);
+		System.out.println("–’√˚:"+userName+"√‹¬Î"+passWord);*/
+		doPost(request, response);
 	}
 
 	/**
@@ -60,8 +63,17 @@ public class logInfo extends HttpServlet {
 
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
-		String name=new String(request.getParameter("name").getBytes("ISO8859-1"),"UTF-8");
-		out.print(name);
+		//String name=new String(request.getParameter("name").getBytes("ISO8859-1"),"UTF-8");
+		//out.print(name);
+		//System.out.println("zy");
+		String line="";
+		StringBuilder builder=new StringBuilder();
+		BufferedReader br=request.getReader();
+		while((line=br.readLine())!=null){
+			builder.append(line);
+		}
+		//response.getWriter().write(builder.toString());
+		System.out.println(builder.toString());
 	}
 
 	/**

@@ -3,7 +3,14 @@ package com.zhongying.zy.sharetrash;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.zhongying.zy.sharetrash.model.UserInfo;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,7 +24,7 @@ import java.util.Map;
 
 public class Userservice {
     public static boolean check(String name, String pass, Context context){
-        String path="http://115.154.116.201:8080/transfer/servlet/logInfo";
+        String path="http://zyitem.ngrok.cc/transfer/servlet/logInfo";
         Map<String,String> params=new HashMap<String,String>();
         params.put("name",name);
         params.put("password",pass);
@@ -29,19 +36,40 @@ public class Userservice {
         return false;
     }
     public static boolean SendGetRequest(String path,Map<String,String> params,String encode,Context context) throws UnsupportedEncodingException {
+        JSONObject js=new JSONObject();
+        JSONObject param=new JSONObject();
+        UserInfo user=null;
+        for (Map.Entry<String,String> entry:params.entrySet()) {
+            user=new UserInfo();
+            String name="name";
+            String password="password";
+            if(name.equals(entry.getKey())){
+                user.setUsername(URLEncoder.encode(entry.getValue(),encode));
+            }
+            if(password.equals(entry.getKey())){
+                user.setUserpass(URLEncoder.encode(entry.getValue(),encode));
+            }
+        }
+        try {
+            js.put("name",user.getUsername());
+            js.put("password",user.getUserpass());
+            param.put("userInfo",js);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         StringBuilder url=new StringBuilder();
         try {
-            url.append(path).append("?");
-            for (Map.Entry<String,String> entry:params.entrySet()) {
-                    url.append(entry.getKey()).append("=");
-                    url.append(URLEncoder.encode(entry.getValue(),encode));
-                    url.append("&");
-                }
-            url.deleteCharAt(url.length()-1);
-            //Toast.makeText(context,url,Toast.LENGTH_LONG).show();
+            url.append(path);
             HttpURLConnection conn= (HttpURLConnection) new URL(url.toString()).openConnection();
             conn.setConnectTimeout(5000);
-            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); // 内容类型
+            OutputStream os = conn.getOutputStream();
+            final String content=String.valueOf(param);
+            os.write(content.getBytes());
+            os.close();
             if(conn.getResponseCode()==200){
                 return true;
             }

@@ -1,7 +1,10 @@
 package com.zhongying.zy.sharetrash;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,25 +12,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.zhongying.zy.sharetrash.loginActivity.RegistActivity;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText username;
     private EditText password;
-    private Button regist;
+    private Button LogIn;
+    private Button Regist;
+    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
-
-        click();
-    }
-    public void click() {
-        regist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(login).start();
-            }
-        });
+        initButtons();
+        LogIn.setOnClickListener(this);
+        Regist.setOnClickListener(this);
     }
     Handler handler=new Handler(){
         @Override
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"注册失败",Toast.LENGTH_LONG).show();
                 }
             }
-
         }
     };
     Runnable login=new Runnable() {
@@ -58,9 +56,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 };
-    public void init() {
-        regist= (Button) findViewById(R.id.regist);
+    public void initButtons() {
         username= (EditText) findViewById(R.id.username);
         password= (EditText) findViewById(R.id.password);
+        LogIn= (Button) findViewById(R.id.logIn);
+        Regist= (Button) findViewById(R.id.Regist);
+        transaction=getSupportFragmentManager().beginTransaction();
+    }
+
+    @Override
+    public void onClick(View v) {
+    switch (v.getId()){
+        case R.id.logIn:{
+            new Thread(login).start();
+            break;
+        }
+        case R.id.Regist:{
+            Intent intent=new Intent(this, RegistActivity.class);
+            startActivity(intent);
+            break;
+        }
+}
     }
 }
