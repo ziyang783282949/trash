@@ -1,6 +1,7 @@
 package com.zhongying.zy.sharetrash;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.zhongying.zy.sharetrash.model.UserInfo;
@@ -26,7 +27,7 @@ public class Userservice {
     public static boolean check(String name, String pass, Context context){
         String path="http://zyitem.ngrok.cc/transfer/servlet/logInfo";
         Map<String,String> params=new HashMap<String,String>();
-        params.put("name",name);
+        params.put("username",name);
         params.put("password",pass);
         try {
             return SendGetRequest(path,params,"UTF-8",context);
@@ -38,20 +39,22 @@ public class Userservice {
     public static boolean SendGetRequest(String path,Map<String,String> params,String encode,Context context) throws UnsupportedEncodingException {
         JSONObject js=new JSONObject();
         JSONObject param=new JSONObject();
-        UserInfo user=null;
+        UserInfo user=new UserInfo();
         for (Map.Entry<String,String> entry:params.entrySet()) {
-            user=new UserInfo();
-            String name="name";
+            //user=new UserInfo();
+            String name="username";
             String password="password";
             if(name.equals(entry.getKey())){
                 user.setUsername(URLEncoder.encode(entry.getValue(),encode));
+
             }
             if(password.equals(entry.getKey())){
                 user.setUserpass(URLEncoder.encode(entry.getValue(),encode));
             }
         }
         try {
-            js.put("name",user.getUsername());
+
+            js.put("username",user.getUsername());
             js.put("password",user.getUserpass());
             param.put("userInfo",js);
         } catch (JSONException e) {
