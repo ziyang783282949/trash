@@ -15,5 +15,9 @@ public String getPassword() {
 public void setPassword(String password) {
 	this.password = password;
 }
+@Override
+public String toString() {
+	return "userInfo [username=" + username + ", password=" + password + "]";
+}
 
 }

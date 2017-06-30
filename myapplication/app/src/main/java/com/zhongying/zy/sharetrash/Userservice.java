@@ -53,9 +53,9 @@ public class Userservice {
             }
         }
         try {
-
             js.put("username",user.getUsername());
             js.put("password",user.getUserpass());
+            //Log.i("info",user.getUsername());
             param.put("userInfo",js);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -70,8 +70,9 @@ public class Userservice {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); // 内容类型
             OutputStream os = conn.getOutputStream();
-            final String content=String.valueOf(param);
+            final String content= String.valueOf(param);
             os.write(content.getBytes());
+            //Log.i("info",content);
             os.close();
             if(conn.getResponseCode()==200){
                 return true;
