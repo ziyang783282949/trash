@@ -58,21 +58,32 @@ public class logInfo extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out=response.getWriter();
-		String line="";
-		StringBuilder builder=new StringBuilder();
-		BufferedReader br=request.getReader();
-		while((line=br.readLine())!=null){
-			builder.append(line);
-		}
-		String content=URLDecoder.decode(builder.toString(), "utf-8");
+		String content=readRequest(request,response);
 		
 		userInfo user=new userInfo();
 		user=JsonToUser(content);
 		System.out.println(user);
 	}
+	public String readRequest(HttpServletRequest request,HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html;charset=UTF-8");
+		StringBuilder builder;
+		try {
+			PrintWriter out=response.getWriter();
+			String line="";
+			builder = new StringBuilder();
+			BufferedReader br=request.getReader();
+			while((line=br.readLine())!=null){
+				builder.append(line);
+			}
+			return URLDecoder.decode(builder.toString(), "utf-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public userInfo JsonToUser(String str) {
 		JSONObject userInfo=JSONObject.fromObject(str);
 		JSONObject userJson=userInfo.getJSONObject("userInfo");
