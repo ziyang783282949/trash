@@ -33,10 +33,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 0:{
-                    Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"登录成功",Toast.LENGTH_LONG).show();
+                    break;
                 }
                 case 1:{
-                    Toast.makeText(getApplicationContext(),"注册失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case 2:{
+                    Toast.makeText(getApplicationContext(),"网络连接错误",Toast.LENGTH_LONG).show();
+                    break;
                 }
             }
         }
@@ -47,12 +53,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String name=username.getText().toString();
         String pass=password.getText().toString();
-        Boolean result=Userservice.check(name,pass,getApplicationContext());
-        if(result){
-            handler.sendEmptyMessage(0);
-        }
-        else{
-            handler.sendEmptyMessage(1);
+        String result=Userservice.login(name,pass,getApplicationContext());
+        ///未处理部分
+        if(result!=null){
+            if(result.equals("success")){
+                handler.sendEmptyMessage(0);
+            }
+            if(result.equals("fail")){
+                handler.sendEmptyMessage(1);
+            }
+            if(result.equals("error")){
+                handler.sendEmptyMessage(2);
+            }
         }
     }
 };

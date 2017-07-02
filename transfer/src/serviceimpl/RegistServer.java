@@ -6,31 +6,34 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import javax.enterprise.inject.New;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.userinfo;
 import net.sf.json.JSONObject;
 
-import model.userinfo;
-
-import service.LoginService;
+import service.RegistService;
 import userDaoServer.UserDaoServer;
 import userDaoService.UserDaoService;
 
-public class LoginServer implements LoginService{
+public class RegistServer implements RegistService{
 private UserDaoService dao=new UserDaoServer();
 	@Override
-	public String login(HttpServletRequest request, HttpServletResponse response)
+	public String regist(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// TODO Auto-generated method stub
 		String content=GetString(request,response);
 		userinfo user=new userinfo();
 		user=JsonToUser(content);
-		userinfo userinfo=dao.login(user.getUsername(), user.getUserpass());
+		userinfo userinfo=dao.check(user.getUsername(), user.getUserpass());
 		if(userinfo!=null){
-			return "登陆成功";
+			return "用户名已存在";
 		}
-		return "登陆失败";
+		if(dao.regist(user.getUsername(), user.getUserpass())){
+			return "注册成功";
+		}
+		return "";	
 	}
 	public userinfo JsonToUser(String str) {
 		JSONObject userInfo=JSONObject.fromObject(str);
@@ -60,4 +63,5 @@ private UserDaoService dao=new UserDaoServer();
 		}
 		return null;
 	}
+
 }

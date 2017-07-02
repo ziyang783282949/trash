@@ -46,10 +46,16 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0: {
-                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "用户已存在", Toast.LENGTH_LONG).show();
+                    break;
                 }
                 case 1: {
-                    Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_LONG).show();
+                    break;
+                }
+                case 2: {
+                    Toast.makeText(getApplicationContext(), "网络未连接", Toast.LENGTH_LONG).show();
+                    break;
                 }
             }
         }
@@ -60,12 +66,19 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
                 String name = username.getText().toString();
                 String pass = password.getText().toString();
-                Boolean result = Userservice.check(name, pass, getApplicationContext());
-                if (result) {
-                    handler.sendEmptyMessage(0);
-                } else {
-                    handler.sendEmptyMessage(1);
+                String result = Userservice.regist(name, pass, getApplicationContext());
+                if(result!=null){
+                    if(result.equals("userExist")){
+                        handler.sendEmptyMessage(0);
+                    }
+                    if(result.equals("success")){
+                        handler.sendEmptyMessage(1);
+                    }
+                    if(result.equals("error")){
+                        handler.sendEmptyMessage(2);
+                    }
                 }
+
             }
 
     };

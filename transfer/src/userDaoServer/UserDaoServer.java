@@ -36,4 +36,18 @@ public class UserDaoServer implements UserDaoService{
 		boolean flag = jdbcUtils.updateByPreparedStatement(sql, params);
 		return flag;
 	}
+
+	@Override
+	public userinfo login(String userName, String userPassword) throws Exception {
+		// TODO Auto-generated method stub
+		JdbcUtils jdbcUtils=new JdbcUtils();
+		jdbcUtils.getConnection();
+		String sql="select * from userinfo where username = ? and userpass = ?";
+		List<Object> params=new ArrayList<Object>();
+		params.add(userName);
+		params.add(userPassword);
+		userinfo user;
+		user=jdbcUtils.findSimpleRefResult(sql, params, userinfo.class);
+		return user;
+	}
 }
