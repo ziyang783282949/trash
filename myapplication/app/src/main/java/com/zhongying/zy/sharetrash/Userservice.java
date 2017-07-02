@@ -85,6 +85,7 @@ public class Userservice {
                 sb.append(line);
             }
             String responseCheck= URLDecoder.decode(sb.toString(),"utf-8");
+            //Log.i("info",responseCheck);
             String finalContent=ParseJson(responseCheck);
             if(conn.getResponseCode()==200){
                 if(finalContent.equals("success")){

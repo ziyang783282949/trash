@@ -83,8 +83,7 @@ public class UserLogin extends HttpServlet {
 			if (path.equals("µÇÂ¼Ê§°Ü")) {
 				js.put("check", URLEncoder.encode("fail", "utf-8"));
 			}
-
-			if (path.equals("µÇÂ½³É¹¦")) {
+			if (path.equals("µÇÂ¼³É¹¦")) {
 				js.put("check", URLEncoder.encode("success", "utf-8"));
 			}
 			out.print(js.toString());

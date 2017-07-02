@@ -26,8 +26,8 @@ private UserDaoService dao=new UserDaoServer();
 		String content=GetString(request,response);
 		userinfo user=new userinfo();
 		user=JsonToUser(content);
-		userinfo userinfo=dao.check(user.getUsername(), user.getUserpass());
-		if(userinfo!=null){
+		userinfo finaluser=dao.check(user.getUsername(), user.getUserpass());
+		if(finaluser!=null){
 			return "用户名已存在";
 		}
 		if(dao.regist(user.getUsername(), user.getUserpass())){

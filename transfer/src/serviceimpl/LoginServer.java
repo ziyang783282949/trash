@@ -26,11 +26,15 @@ private UserDaoService dao=new UserDaoServer();
 		String content=GetString(request,response);
 		userinfo user=new userinfo();
 		user=JsonToUser(content);
-		userinfo userinfo=dao.login(user.getUsername(), user.getUserpass());
-		if(userinfo!=null){
-			return "µÇÂ½³É¹¦";
+		userinfo finaluserinfo=dao.login(user.getUsername(), user.getUserpass());
+		if(finaluserinfo!=null){
+			return "µÇÂ¼³É¹¦";
 		}
-		return "µÇÂ½Ê§°Ü";
+		if(finaluserinfo==null){
+			//System.out.println(finaluserinfo);
+			return "µÇÂ¼Ê§°Ü";
+		}
+		return null;
 	}
 	public userinfo JsonToUser(String str) {
 		JSONObject userInfo=JSONObject.fromObject(str);
