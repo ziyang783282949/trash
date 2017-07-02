@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import service.LoginService;
 import serviceimpl.LoginServer;
 
-import model.userInfo;
 import net.sf.json.JSONObject;
 
 public class logInfo extends HttpServlet {

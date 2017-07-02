@@ -1,7 +1,9 @@
 package userDaoService;
 
-import model.userInfo;
+import model.userinfo;
+
 
 public interface UserDaoService {
-	public userInfo check(String userName,String userPassword) throws Exception;
+	public userinfo check(String userName,String userPassword) throws Exception;
+	public boolean regist(String userName,String userPassword) throws Exception;
 }
