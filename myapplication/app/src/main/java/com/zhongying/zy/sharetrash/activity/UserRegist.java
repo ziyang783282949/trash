@@ -1,24 +1,23 @@
-package com.zhongying.zy.sharetrash.loginActivity;
+package com.zhongying.zy.sharetrash.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.zhongying.zy.sharetrash.R;
-import com.zhongying.zy.sharetrash.Userservice;
+import com.zhongying.zy.sharetrash.LoginAndRegist;
 
 /**
  * Created by zy on 2017/6/29.
  */
 
-public class RegistActivity extends AppCompatActivity implements View.OnClickListener{
+public class UserRegist extends AppCompatActivity implements View.OnClickListener{
     private Button regist;
     private EditText username;
     private EditText password;
@@ -66,7 +65,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
                 String name = username.getText().toString();
                 String pass = password.getText().toString();
-                String result = Userservice.regist(name, pass, getApplicationContext());
+                String result = LoginAndRegist.regist(name, pass, getApplicationContext());
                 if(result!=null){
                     if(result.equals("userExist")){
                         handler.sendEmptyMessage(0);

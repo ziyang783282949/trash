@@ -1,4 +1,4 @@
-package com.zhongying.zy.sharetrash.model;
+package com.zhongying.zy.sharetrash.UserService;
 
 /**
  * Created by zy on 2017/6/29.

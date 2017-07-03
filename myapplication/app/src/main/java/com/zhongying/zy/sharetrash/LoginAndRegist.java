@@ -1,18 +1,14 @@
 package com.zhongying.zy.sharetrash;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.zhongying.zy.sharetrash.model.UserInfo;
+import com.zhongying.zy.sharetrash.UserService.UserInfo;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -27,7 +23,7 @@ import java.util.Map;
  * Created by zy on 2017/6/18.
  */
 
-public class Userservice {
+public class LoginAndRegist {
     public static String login(String name, String pass, Context context){
         String path="http://zyitem.ngrok.cc/transfer/servlet/UserLogin";
         Map<String,String> params=new HashMap<String,String>();

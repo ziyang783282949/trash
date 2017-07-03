@@ -1,9 +1,8 @@
-package com.zhongying.zy.sharetrash;
+package com.zhongying.zy.sharetrash.activity;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,9 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.zhongying.zy.sharetrash.loginActivity.RegistActivity;
+import com.zhongying.zy.sharetrash.R;
+import com.zhongying.zy.sharetrash.LoginAndRegist;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class UserLogin extends AppCompatActivity implements View.OnClickListener{
     private EditText username;
     private EditText password;
     private Button LogIn;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String name=username.getText().toString();
         String pass=password.getText().toString();
-        String result=Userservice.login(name,pass,getApplicationContext());
+        String result= LoginAndRegist.login(name,pass,getApplicationContext());
         ///未处理部分
         if(result!=null){
             if(result.equals("success")){
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             break;
         }
         case R.id.Regist:{
-            Intent intent=new Intent(this, RegistActivity.class);
+            Intent intent=new Intent(this, UserRegist.class);
             startActivity(intent);
             break;
         }
