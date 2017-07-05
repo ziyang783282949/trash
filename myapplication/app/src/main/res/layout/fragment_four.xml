@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:srcCompat="@android:color/holo_blue_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <com.zhongying.zy.sharetrash.UserService.CircleImageview
+        android:id="@+id/mycircle"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@color/holo_blue_light"
+        android:src="@mipmap/mine_selected"
+        app:backgroundHeadColor="@color/yellow"
+        app:circleBorderHeadWidth="5dp"
+        app:ringHeadColor="@color/colorAccent" />
+        />
+</RelativeLayout>

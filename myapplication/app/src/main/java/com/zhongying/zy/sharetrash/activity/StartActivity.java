@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.lzy.widget.AlphaIndicator;
 import com.zhongying.zy.sharetrash.R;
+import com.zhongying.zy.sharetrash.fragment.FourFragment;
 import com.zhongying.zy.sharetrash.fragment.TextFragment;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class StartActivity extends AppCompatActivity {
             fragments.add(TextFragment.newInstance(titles[0]));
             fragments.add(TextFragment.newInstance(titles[1]));
             fragments.add(TextFragment.newInstance(titles[2]));
-            fragments.add(TextFragment.newInstance(titles[3]));
+            fragments.add(FourFragment.newInstance());
         }
         @Override
         public Fragment getItem(int position) {
