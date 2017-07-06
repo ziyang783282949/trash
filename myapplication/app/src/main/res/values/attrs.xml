@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CircleHead">
-        <attr name="circleBorderHeadWidth" format="dimension" />
-        <attr name="ringHeadColor" format="color" />
-        <attr name="backgroundHeadColor" format="color" />
+    <attr name="borderRadius" format="dimension" />
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" />
+        <attr name="type" />
     </declare-styleable>
 </resources>
