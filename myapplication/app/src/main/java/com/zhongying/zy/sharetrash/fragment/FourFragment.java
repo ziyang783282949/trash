@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.activity.StartActivity;
@@ -18,7 +19,7 @@ import com.zhongying.zy.sharetrash.activity.UserLogin;
  */
 public class FourFragment extends Fragment implements View.OnClickListener{
     private LinearLayout loginButton;
-
+    private LinearLayout zy;
     public FourFragment() {
         // Required empty public constructor
     }
@@ -29,6 +30,7 @@ public class FourFragment extends Fragment implements View.OnClickListener{
         View view=inflater.inflate(R.layout.fragment_four, container, false);
         init(view);
         loginButton.setOnClickListener(this);
+        zy.setOnClickListener(this);
         return view;
     }
     public static FourFragment newInstance(){
@@ -37,6 +39,7 @@ public class FourFragment extends Fragment implements View.OnClickListener{
     }
    public void init(View view){
        loginButton= (LinearLayout) view.findViewById(R.id.loginButton);
+        zy= (LinearLayout) view.findViewById(R.id.zy);
    }
 
     @Override
@@ -45,6 +48,11 @@ public class FourFragment extends Fragment implements View.OnClickListener{
             case R.id.loginButton:{
                 Intent intent=new Intent(getActivity(), UserLogin.class);
                 startActivity(intent);
+                break;
+            }
+            case R.id.zy:{
+                Toast.makeText(getContext(),"sdads",Toast.LENGTH_LONG).show();
+                break;
             }
         }
     }

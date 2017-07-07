@@ -13,33 +13,131 @@
         app:srcCompat="@android:color/holo_blue_light"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
-
     <LinearLayout
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
 
-        <com.zhongying.zy.sharetrash.UserService.View.RoundImageView
-            android:id="@+id/round"
-            android:layout_width="130dp"
-            android:layout_height="100dp"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="45dp"
-            android:src="@drawable/head" />
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:textSize="30sp"
-            android:text="@string/login"/>
+            <com.zhongying.zy.sharetrash.UserService.View.RoundImageView
+                android:id="@+id/round"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="45dp"
+                android:src="@drawable/head" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/login"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:scrollbars="vertical"
+        android:fadingEdge="vertical">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView2"
+                android:background="#F0F3F6"
+                android:orientation="vertical">
+
+
+                <LinearLayout style="@style/wrap_layout">
+                    <!-- 上圆角-->
+                    <LinearLayout
+                        android:id="@+id/zy"
+                        style="@style/top_layout">
+
+                        <TextView
+                            style="@style/usertext"
+                            android:text="消息通知" />
+
+                        <ImageView style="@style/img_arrow" />
+                    </LinearLayout>
+
+                    <!-- 分割线 -->
+                    <View style="@style/bg_line" />
+                    <!-- 无圆角-->
+                    <LinearLayout style="@style/mid_layout">
+
+                        <TextView
+                            style="@style/usertext"
+                            android:text="会员中心" />
+
+                        <ImageView style="@style/img_arrow" />
+                    </LinearLayout>
+
+                    <View style="@style/bg_line" />
+                    <!-- 下圆角-->
+                    <LinearLayout style="@style/bottom_layout">
+
+                        <TextView
+                            style="@style/usertext"
+                            android:text="我的资料" />
+
+                        <ImageView style="@style/img_arrow" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- 全圆角-->
+                <LinearLayout style="@style/wrap_layout">
+
+                    <LinearLayout style="@style/top_layout">
+
+                        <TextView
+                            style="@style/usertext"
+                            android:text="设置" />
+
+                        <ImageView style="@style/img_arrow" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/mid_layout">
+
+                        <TextView
+                            style="@style/usertext"
+                            android:text="意见反馈" />
+
+                        <ImageView style="@style/img_arrow" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/bottom_layout">
+
+                        <TextView
+                            style="@style/usertext"
+                            android:text="版本信息" />
+
+                        <ImageView style="@style/img_arrow" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+    </ScrollView>
     </LinearLayout>
 </RelativeLayout>
