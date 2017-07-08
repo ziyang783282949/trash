@@ -11,6 +11,7 @@ import com.lzy.widget.AlphaIndicator;
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.fragment.FourFragment;
 import com.zhongying.zy.sharetrash.fragment.TextFragment;
+import com.zhongying.zy.sharetrash.fragment.TwoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class StartActivity extends AppCompatActivity {
         public MainAdapter(FragmentManager fm) {
             super(fm);
             fragments.add(TextFragment.newInstance(titles[0]));
-            fragments.add(TextFragment.newInstance(titles[1]));
+            fragments.add(TwoFragment.newInstance());
             fragments.add(TextFragment.newInstance(titles[2]));
             fragments.add(FourFragment.newInstance());
         }
