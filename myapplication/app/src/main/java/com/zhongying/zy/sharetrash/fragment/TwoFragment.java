@@ -10,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.LocationSource;
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.activity.Location;
 

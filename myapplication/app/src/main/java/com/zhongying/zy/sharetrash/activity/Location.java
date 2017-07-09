@@ -2,6 +2,7 @@ package com.zhongying.zy.sharetrash.activity;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,21 +13,17 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.location.DPoint;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.CoordinateConverter;
-import com.amap.api.maps2d.LocationSource;
-import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.UiSettings;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.maps2d.model.MyLocationStyle;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.UserService.Utils.CoordinateUtil;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Location extends AppCompatActivity implements LocationSource,AMapLocationListener{
     //显示地图需要的变量
@@ -52,14 +49,13 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
         mapView.onCreate(savedInstanceState);
         aMap = mapView.getMap();
         addMarkerToMap();
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        aMap.setMyLocationStyle(myLocationStyle);
         initLocation();
+
     }
 
     private void addMarkerToMap() {
         MarkerOptions markerOption1 = new MarkerOptions();
-        markerOption1.position(new LatLng(39.9081728469, 116.3867845961));
+        markerOption1.position(new LatLng(34.245971,108.987109));
         markerOption1.draggable(true);
 
         MarkerOptions markerOption2 = new MarkerOptions();
@@ -75,7 +71,11 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
      * 获取定位坐标
      */
     public void initLocation() {
-
+        initialPosition();
+        //设置定位蓝点样式
+        MyLocationStyle myLocationStyle = new MyLocationStyle();
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）默认执行此种模式。
+        aMap.setMyLocationStyle(myLocationStyle);
         //设置显示定位按钮 并且可以点击
         UiSettings settings = aMap.getUiSettings();
         aMap.setLocationSource(this);//设置了定位的监听,这里要实现LocationSource接口
@@ -105,6 +105,29 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
         //启动定位
         mlocationClient.startLocation();
     }
+
+    public void initialPosition() {
+        String lo=initialShare("");
+        String[] complex=lo.split(",");
+        String Latitude=complex[0];
+        String Longtitude=complex[1];
+        Double finalLatitude=Double.parseDouble(Latitude);
+        Double finalLongtitude=Double.parseDouble(Longtitude);
+        LatLng localLatLng=new LatLng(finalLatitude,finalLongtitude);
+        this.aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localLatLng,18));
+    }
+
+    public String initialShare(String prelat) {
+        SharedPreferences read = getSharedPreferences("locata", MODE_PRIVATE);
+        SharedPreferences.Editor editor = getSharedPreferences("locata", MODE_PRIVATE).edit();
+        if(!"".equals(prelat)) {
+            editor.putString("prelocation", prelat);
+            editor.commit();
+        }
+        editor.commit();
+        return read.getString("prelocation","");
+    }
+
     public AMapLocation fromGpsToAmap(AMapLocation location) {
         LatLng latLng =null;
         latLng = CoordinateUtil.transform(location.getLatitude(), location.getLongitude());
@@ -129,7 +152,8 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())));
                     //点击定位按钮 能够将地图的中心移动到定位点
                     mListener.onLocationChanged(aMapLocation);
-                    Toast.makeText(getApplicationContext(), "定位成功", Toast.LENGTH_SHORT).show();
+                    initialShare(aMapLocation.getLatitude()+","+aMapLocation.getLongitude());
+                    //Toast.makeText(getApplicationContext(), aMapLocation.getLatitude()+","+aMapLocation.getLongitude(), Toast.LENGTH_SHORT).show();
                     isFirstLoc = false;
                 }
             } else {
@@ -174,5 +198,6 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
     public void deactivate() {
         mListener=null;
     }
+
 }
 

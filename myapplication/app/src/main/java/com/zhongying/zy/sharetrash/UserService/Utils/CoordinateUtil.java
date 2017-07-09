@@ -1,6 +1,7 @@
 package com.zhongying.zy.sharetrash.UserService.Utils;
 
-import com.amap.api.maps2d.model.LatLng;
+
+import com.amap.api.maps.model.LatLng;
 
 /**
  * Created by zy on 2017/7/9.
