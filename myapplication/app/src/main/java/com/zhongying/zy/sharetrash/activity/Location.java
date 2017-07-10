@@ -26,6 +26,7 @@ import com.zhongying.zy.sharetrash.UserService.Utils.CoordinateUtil;
 
 
 public class Location extends AppCompatActivity implements LocationSource,AMapLocationListener{
+    private boolean first;
     //显示地图需要的变量
     private MapView mapView;//地图控件
     private AMap aMap;//地图对象
@@ -54,8 +55,10 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
     }
 
     private void addMarkerToMap() {
+        double[] locate={108.987081,34.245553,};
         MarkerOptions markerOption1 = new MarkerOptions();
         markerOption1.position(new LatLng(34.245971,108.987109));
+        markerOption1.title("实打实");
         markerOption1.draggable(true);
 
         MarkerOptions markerOption2 = new MarkerOptions();
@@ -107,7 +110,17 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
     }
 
     public void initialPosition() {
-        String lo=initialShare("");
+        String lo="";
+        if(first){
+            lo=initialShare("");
+            first=false;
+        }
+        else {
+            SharedPreferences read = getSharedPreferences("locata", MODE_PRIVATE);
+            lo=initialShare(read.getString("prelocation",""));
+        }
+        Toast.makeText(this,lo,Toast.LENGTH_SHORT).show();
+
         String[] complex=lo.split(",");
         String Latitude=complex[0];
         String Longtitude=complex[1];
@@ -115,13 +128,17 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
         Double finalLongtitude=Double.parseDouble(Longtitude);
         LatLng localLatLng=new LatLng(finalLatitude,finalLongtitude);
         this.aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localLatLng,18));
-    }
+        }
 
     public String initialShare(String prelat) {
         SharedPreferences read = getSharedPreferences("locata", MODE_PRIVATE);
         SharedPreferences.Editor editor = getSharedPreferences("locata", MODE_PRIVATE).edit();
         if(!"".equals(prelat)) {
             editor.putString("prelocation", prelat);
+            editor.commit();
+        }
+        if("".equals(prelat)){
+            editor.putString("prelocation", "30.248054,108.989356");
             editor.commit();
         }
         editor.commit();
@@ -134,7 +151,6 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
         AMapLocation aMapLocation = new AMapLocation(location);
         aMapLocation.setLatitude(latLng.latitude);
         aMapLocation.setLongitude(latLng.longitude);
-
         return aMapLocation;
     }
     /**

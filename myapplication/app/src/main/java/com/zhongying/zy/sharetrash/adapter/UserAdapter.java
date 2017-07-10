@@ -84,21 +84,21 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_user, parent, false);
             holder = new ViewHolder();
-            holder.avatar = (CircleImageView) convertView.findViewById(R.id.iv_avatar);
             holder.name = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.details= (TextView) convertView.findViewById(R.id.tv_detail);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         User user = mDatas.get(position);
-        holder.avatar.setImageResource(user.getAvatarResId());
         holder.name.setText(user.getName());
+        holder.details.setText(user.getDetails());
         return convertView;
     }
 
     public class ViewHolder {
-        CircleImageView avatar;
         TextView name;
+        TextView details;
     }
 
     @Override
@@ -152,8 +152,9 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                     final User value = values.get(i);//从List<User>中拿到User对象
 //                    final String valueText = value.toString().toLowerCase();
                     final String valueText = value.getName().toString().toLowerCase();//User对象的name属性作为过滤的参数
+                    final String details=value.getDetails().toString().toLowerCase();
                     // First match against the whole, non-splitted value
-                    if (valueText.startsWith(prefixString) || valueText.indexOf(prefixString.toString()) != -1) {//第一个字符是否匹配
+                    if (valueText.startsWith(prefixString) || valueText.indexOf(prefixString.toString()) != -1 || details.indexOf(prefixString.toString()) != -1) {//第一个字符是否匹配
                         newValues.add(value);//将这个item加入到数组对象中
                     } else {//处理首字符是空格
                         final String[] words = valueText.split(" ");

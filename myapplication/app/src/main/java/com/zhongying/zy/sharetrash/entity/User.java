@@ -11,20 +11,19 @@ package com.zhongying.zy.sharetrash.entity;
  * 修改备注：
  */
 public class User {
-    private int avatarResId;
     private String name;
-
-    public User(int avatarResId, String name) {
-        this.avatarResId = avatarResId;
+    private String details;
+    public User(String name,String details) {
         this.name = name;
+        this.details=details;
     }
 
-    public int getAvatarResId() {
-        return avatarResId;
+    public String getDetails() {
+        return details;
     }
 
-    public void setAvatarResId(int avatarResId) {
-        this.avatarResId = avatarResId;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public String getName() {
