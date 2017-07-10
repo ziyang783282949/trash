@@ -10,9 +10,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.activity.Location;
@@ -54,7 +56,6 @@ public class TwoFragment extends Fragment implements View.OnClickListener{
         initListView();
         intiEditView();
     }
-
     private void intiEditView() {
         et_search.addTextChangedListener(new TextWatcher() {
             @Override

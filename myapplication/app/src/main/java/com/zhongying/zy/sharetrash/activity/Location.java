@@ -55,19 +55,16 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
     }
 
     private void addMarkerToMap() {
-        double[] locate={108.987081,34.245553,};
-        MarkerOptions markerOption1 = new MarkerOptions();
-        markerOption1.position(new LatLng(34.245971,108.987109));
-        markerOption1.title("实打实");
-        markerOption1.draggable(true);
-
-        MarkerOptions markerOption2 = new MarkerOptions();
-        markerOption2.position(new LatLng(40.9081728469, 116.4867845961));
-        markerOption2.draggable(true);
-
-        aMap.addMarker(markerOption1);
-        aMap.addMarker(markerOption2);
-
+        double[] locate={108.987147,34.245585,108.998981,34.224713,108.963681,34.250827,108.94887,34.248934,
+                108.936688,34.245277,108.935444,34.237487};
+        String[] detail={"交大兴庆校区","电力设计院","和平门","世纪金花时代广场","糖果厂住宅区","西安市体育学院"};
+        for(int i=5;i>=0;i--){
+            MarkerOptions markerOption = new MarkerOptions();
+            markerOption.position(new LatLng(locate[i*2+1],locate[i*2]));
+            markerOption.title(detail[i]);
+            markerOption.draggable(true);
+            aMap.addMarker(markerOption);
+        }
     }
 
     /**
