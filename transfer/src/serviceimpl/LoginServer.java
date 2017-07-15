@@ -24,6 +24,7 @@ private UserDaoService dao=new UserDaoServer();
 			throws Exception {
 		// TODO Auto-generated method stub
 		String content=GetString(request,response);
+		System.out.println(content);
 		userinfo user=new userinfo();
 		user=JsonToUser(content);
 		userinfo finaluserinfo=dao.login(user.getUsername(), user.getUserpass());
@@ -38,10 +39,10 @@ private UserDaoService dao=new UserDaoServer();
 	}
 	public userinfo JsonToUser(String str) {
 		JSONObject userInfo=JSONObject.fromObject(str);
-		JSONObject userJson=userInfo.getJSONObject("userInfo");
+		//JSONObject userJson=userInfo.getJSONObject("userInfo");
 		userinfo user=new userinfo();
-		user.setUsername(userJson.get("username").toString());
-		user.setUserpass(userJson.get("password").toString());
+		user.setUsername(userInfo.get("username").toString());
+		user.setUserpass(userInfo.get("password").toString());
 		return user;
 	}
 	public String GetString(HttpServletRequest request, HttpServletResponse response){

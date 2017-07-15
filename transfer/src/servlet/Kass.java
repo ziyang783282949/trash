@@ -2,27 +2,18 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
-import service.LoginService;
-import service.RegistService;
-import serviceimpl.LoginServer;
-import serviceimpl.RegistServer;
-
-public class UserLogin extends HttpServlet {
+public class Kass extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public UserLogin() {
+	public Kass() {
 		super();
 	}
 
@@ -62,42 +53,15 @@ public class UserLogin extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		PrintWriter writer=response.getWriter();
+		request.setCharacterEncoding("utf-8");
+		String name=request.getParameter("name");
+		String pass=request.getParameter("password");
+		writer.write(name+"\n"+pass);
+		writer.flush();
+		writer.close();
+	}
 
-		LoginService service=new LoginServer();
-		try {
-			String path = service.login(request,response);
-			returnClient(path, request, response);
-			System.out.println(path);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public void returnClient(String path, HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		response.setCharacterEncoding("utf-8");
-		try {
-			JSONObject js = new JSONObject();
-			PrintWriter out=response.getWriter();
-			if (path.equals("µÇÂ¼Ê§°Ü")) {
-				js.put("check", URLEncoder.encode("fail", "utf-8"));
-			}
-			if (path.equals("µÇÂ¼³É¹¦")) {
-				js.put("check", URLEncoder.encode("success", "utf-8"));
-			}
-			System.out.println(js.toString());
-			out.print(js.toString());
-			out.flush();
-			out.close();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	/**
 	 * Initialization of the servlet. <br>
 	 *

@@ -1,12 +1,17 @@
 package com.zhongying.zy.sharetrash.UserService;
 
+import java.io.Serializable;
+
 /**
  * Created by zy on 2017/6/29.
  */
 
-public class UserInfo {
+public class UserInfo implements Serializable{
     private String username;
-    private String userpass;
+    private String password;
+
+    public UserInfo() {
+    }
 
     public String getUsername() {
         return username;
@@ -16,19 +21,24 @@ public class UserInfo {
         this.username = username;
     }
 
-    public String getUserpass() {
-        return userpass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserpass(String userpass) {
-        this.userpass = userpass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public UserInfo(String username, String userpass) {
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public UserInfo(String username, String password) {
         this.username = username;
-        this.userpass = userpass;
-    }
-    public UserInfo(){
-
+        this.password = password;
     }
 }

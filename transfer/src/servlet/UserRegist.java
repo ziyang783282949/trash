@@ -13,9 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import service.RegistService;
 import serviceimpl.RegistServer;
 
+import model.userinfo;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class UserRegist extends HttpServlet {
@@ -74,32 +78,59 @@ public class UserRegist extends HttpServlet {
 			throws ServletException, IOException {
 
 		RegistService service = new RegistServer();
+		userinfo user=null;
 		try {
-			String path = service.regist(request, response);
-			returnClient(path, request, response);
-			System.out.println(path);
+			user = service.regist(request, response);
+			//System.out.println(user.toString()+"");
+			returnClient(user, request, response);
+			//System.out.println(user+"");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	public void returnClient(String path, HttpServletRequest request,
+public String convertUtf(String a){
+	try {
+		return URLEncoder.encode(a,"utf-8");
+	} catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
+	public void returnClient(userinfo user, HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("utf-8");
-		
+		JSONObject code=new JSONObject();
+		String outString;
+		if(user==null){
+			System.out.println("1");
+			code.put("code", convertUtf("0"));
+			//code.put("message", convertUtf("用户名已存在"));
+			code.put("data", convertUtf(""));	
+			outString=code.toString();
+		}
+		else {
+			Gson gson=new Gson();
+			String uInfo=gson.toJson(user);
+			StringBuilder builder=new StringBuilder();
+			outString="{\"code\":0, \"message\":\"注册成功！\", \"data\":";
+			builder.append(outString).append(uInfo).append("}");
+			outString=builder.toString();
+			try {
+				outString=URLEncoder.encode(outString,"utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
-			JSONObject js = new JSONObject();
 			PrintWriter out=response.getWriter();
-			if (path.equals("用户名已存在")) {
-				js.put("check", URLEncoder.encode("userExist", "utf-8"));
-			}
-
-			if (path.equals("注册成功")) {
-				js.put("check", URLEncoder.encode("successful", "utf-8"));
-			}
-			out.print(js.toString());
+			JSONObject zy=new JSONObject();
+			zy.put("check", "1");
+			System.out.println("返回客户端:    "+zy.toString());
+			out.print(zy.toString());
 			out.flush();
 			out.close();
 		} catch (UnsupportedEncodingException e) {

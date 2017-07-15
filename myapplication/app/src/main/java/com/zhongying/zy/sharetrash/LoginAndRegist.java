@@ -48,12 +48,12 @@ public class LoginAndRegist {
                 user.setUsername(URLEncoder.encode(entry.getValue(),encode));
             }
             if(password.equals(entry.getKey())){
-                user.setUserpass(URLEncoder.encode(entry.getValue(),encode));
+                user.setPassword(URLEncoder.encode(entry.getValue(),encode));
             }
         }
         try {
             js.put("username",user.getUsername());
-            js.put("password",user.getUserpass());
+            js.put("password",user.getPassword());
             //Log.i("info",user.getUsername());
             param.put("userInfo",js);
         } catch (JSONException e) {
@@ -120,12 +120,12 @@ public class LoginAndRegist {
 
             }
             if(password.equals(entry.getKey())){
-                user.setUserpass(URLEncoder.encode(entry.getValue(),encode));
+                user.setPassword(URLEncoder.encode(entry.getValue(),encode));
             }
         }
         try {
             js.put("username",user.getUsername());
-            js.put("password",user.getUserpass());
+            js.put("password",user.getPassword());
             //Log.i("info",user.getUsername());
             param.put("userInfo",js);
         } catch (JSONException e) {

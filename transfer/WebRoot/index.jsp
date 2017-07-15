@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <form action="servlet/logInfo" type="POST">
+    <form action="servlet/Kass" type="POST">
            用户名:<input type="text" name="name"><br>
 	    密码:<input type="password" name="password"><br>
 	    <input type="submit" value="注册">
