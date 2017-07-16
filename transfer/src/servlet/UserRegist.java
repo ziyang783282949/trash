@@ -18,7 +18,8 @@ import com.google.gson.Gson;
 import service.RegistService;
 import serviceimpl.RegistServer;
 
-import model.userinfo;
+import model.BaseEntity;
+import model.UserInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -78,7 +79,7 @@ public class UserRegist extends HttpServlet {
 			throws ServletException, IOException {
 
 		RegistService service = new RegistServer();
-		userinfo user=null;
+		UserInfo user=null;
 		try {
 			user = service.regist(request, response);
 			//System.out.println(user.toString()+"");
@@ -89,48 +90,30 @@ public class UserRegist extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-public String convertUtf(String a){
-	try {
-		return URLEncoder.encode(a,"utf-8");
-	} catch (UnsupportedEncodingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	return null;
-}
-	public void returnClient(userinfo user, HttpServletRequest request,
+	public void returnClient(UserInfo user, HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("utf-8");
-		JSONObject code=new JSONObject();
-		String outString;
+		Gson gson=new Gson();
+		BaseEntity<UserInfo> entity=new BaseEntity<UserInfo>();
+		UserInfo uuser=user;
 		if(user==null){
 			System.out.println("1");
-			code.put("code", convertUtf("0"));
-			//code.put("message", convertUtf("用户名已存在"));
-			code.put("data", convertUtf(""));	
-			outString=code.toString();
+			entity.setCode(1);
+			entity.setMessage("用户名已存在");
+			entity.setData(null);
 		}
 		else {
-			Gson gson=new Gson();
-			String uInfo=gson.toJson(user);
-			StringBuilder builder=new StringBuilder();
-			outString="{\"code\":0, \"message\":\"注册成功！\", \"data\":";
-			builder.append(outString).append(uInfo).append("}");
-			outString=builder.toString();
-			try {
-				outString=URLEncoder.encode(outString,"utf-8");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			System.out.println("0");
+			System.out.println(uuser.toString());
+			entity.setCode(0);
+			entity.setMessage("注册成功");
+			entity.setData(uuser);
 		}
 		try {
 			PrintWriter out=response.getWriter();
-			JSONObject zy=new JSONObject();
-			zy.put("check", "1");
-			System.out.println("返回客户端:    "+zy.toString());
-			out.print(zy.toString());
+			System.out.println("返回客户端:    "+gson.toJson(entity));
+			out.print(gson.toJson(entity));
 			out.flush();
 			out.close();
 		} catch (UnsupportedEncodingException e) {

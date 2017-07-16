@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class userinfo implements Serializable{
+public class UserInfo implements Serializable{
 
 	/**
 	 * 
@@ -11,9 +11,9 @@ public class userinfo implements Serializable{
 
 	private Integer id;
 	private String username;
-	private String userpass;
+	private String password;
 	
-	public userinfo() {
+	public UserInfo() {
 		// TODO Auto-generated constructor stub
 	}
 	public Integer getId() {
@@ -28,15 +28,17 @@ public class userinfo implements Serializable{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getUserpass() {
-		return userpass;
+	
+	public String getPassword() {
+		return password;
 	}
-	public void setUserpass(String userpass) {
-		this.userpass = userpass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	@Override
 	public String toString() {
-		return "userinfo [id=" + id + ", username=" + username + ", userpass="
-				+ userpass + "]";
+		return "userinfo [id=" + id + ", username=" + username + ", password="
+				+ password + "]";
 	}
+	
 }

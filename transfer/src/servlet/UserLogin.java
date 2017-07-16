@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import model.BaseEntity;
+import model.UserInfo;
 import net.sf.json.JSONObject;
 
 import service.LoginService;
@@ -64,30 +68,41 @@ public class UserLogin extends HttpServlet {
 			throws ServletException, IOException {
 
 		LoginService service=new LoginServer();
+		UserInfo user=null;
 		try {
-			String path = service.login(request,response);
-			returnClient(path, request, response);
-			System.out.println(path);
+			user = service.login(request, response);
+			//System.out.println(user.toString()+"");
+			returnClient(user, request, response);
+			//System.out.println(user+"");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void returnClient(String path, HttpServletRequest request,
+	public void returnClient(UserInfo user, HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("utf-8");
+		Gson gson=new Gson();
+		BaseEntity<UserInfo> entity=new BaseEntity<UserInfo>();
+		UserInfo uuser=user;
+		if(user==null){
+			System.out.println("1");
+			entity.setCode(1);
+			entity.setMessage("用户名或密码错误");
+			entity.setData(null);
+		}
+		else {
+			System.out.println("0");
+			System.out.println(uuser.toString());
+			entity.setCode(0);
+			entity.setMessage("登录成功");
+			entity.setData(uuser);
+		}
 		try {
-			JSONObject js = new JSONObject();
 			PrintWriter out=response.getWriter();
-			if (path.equals("登录失败")) {
-				js.put("check", URLEncoder.encode("fail", "utf-8"));
-			}
-			if (path.equals("登录成功")) {
-				js.put("check", URLEncoder.encode("success", "utf-8"));
-			}
-			System.out.println(js.toString());
-			out.print(js.toString());
+			System.out.println("返回客户端:    "+gson.toJson(entity));
+			out.print(gson.toJson(entity));
 			out.flush();
 			out.close();
 		} catch (UnsupportedEncodingException e) {
@@ -97,6 +112,7 @@ public class UserLogin extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	/**
 	 * Initialization of the servlet. <br>

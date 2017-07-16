@@ -11,6 +11,7 @@ public class UserInfo implements Serializable{
     private String password;
 
     public UserInfo() {
+        super();
     }
 
     public String getUsername() {

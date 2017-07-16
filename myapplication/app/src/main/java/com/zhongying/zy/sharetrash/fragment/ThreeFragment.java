@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhongying.zy.sharetrash.R;
-import com.zhongying.zy.sharetrash.interfacePackage.PostLogin;
 
 import java.io.IOException;
 
@@ -37,35 +36,10 @@ public class ThreeFragment extends Fragment {
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hahaas();
                 //Toast.makeText(getActivity(),"dasd",Toast.LENGTH_LONG).show();
             }
         });
         return view;
-    }
-    public void hahaas(){
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://zyitem.ngrok.cc/transfer/servlet/")
-                .build();
-        PostLogin postLogin=retrofit.create(PostLogin.class);
-        Call<ResponseBody> call=postLogin.returnResult("资洋","123");
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String a="";
-                try {
-                    a=response.body().string().toString();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                tv.setText(a);
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
     }
     public static ThreeFragment newInstance(){
         ThreeFragment fragment=new ThreeFragment();

@@ -1,11 +1,11 @@
 package userDaoService;
 
-import model.userinfo;
+import model.UserInfo;
 
 
 public interface UserDaoService {
-	public userinfo check(String userName,String userPassword) throws Exception;
+	public UserInfo check(String userName,String userPassword) throws Exception;
 	public boolean regist(String userName,String userPassword) throws Exception;
-	public userinfo login(String userName,String userPassword) throws Exception;
+	public UserInfo login(String userName,String userPassword) throws Exception;
 
 }

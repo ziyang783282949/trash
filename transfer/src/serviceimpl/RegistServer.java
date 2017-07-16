@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.userinfo;
+import model.UserInfo;
 import net.sf.json.JSONObject;
 
 import service.RegistService;
@@ -21,28 +21,28 @@ import userDaoService.UserDaoService;
 public class RegistServer implements RegistService{
 private UserDaoService dao=new UserDaoServer();
 	@Override
-	public userinfo regist(HttpServletRequest request, HttpServletResponse response)
+	public UserInfo regist(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// TODO Auto-generated method stub
 		String content=GetString(request,response);
 		System.out.println(content);
-		userinfo user=new userinfo();
+		UserInfo user=new UserInfo();
 		user=JsonToUser(content);
-		userinfo finaluser=dao.check(user.getUsername(), user.getUserpass());
+		UserInfo finaluser=dao.check(user.getUsername(), user.getPassword());
 		if(finaluser!=null){
 			return null;
 		}
-		if(dao.regist(user.getUsername(), user.getUserpass())){
+		if(dao.regist(user.getUsername(), user.getPassword())){
 			return user;
 		}
 		return null;	
 	}
-	public userinfo JsonToUser(String str) {
+	public UserInfo JsonToUser(String str) {
 		JSONObject userInfo=JSONObject.fromObject(str);
 		//JSONObject userJson=userInfo.getJSONObject("userInfo");
-		userinfo user=new userinfo();
+		UserInfo user=new UserInfo();
 		user.setUsername(userInfo.get("username").toString());
-		user.setUserpass(userInfo.get("password").toString());
+		user.setPassword(userInfo.get("password").toString());
 		return user;
 	}
 	public String GetString(HttpServletRequest request, HttpServletResponse response){

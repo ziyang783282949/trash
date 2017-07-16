@@ -3,14 +3,14 @@ package userDaoServer;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.userinfo;
+import model.UserInfo;
 import userDaoService.UserDaoService;
 import utils.JdbcUtils;
 
 public class UserDaoServer implements UserDaoService{
 
 	@Override
-	public userinfo check(String userName, String userPassword)
+	public UserInfo check(String userName, String userPassword)
 			throws Exception {
 		// TODO Auto-generated method stub
 		JdbcUtils jdbcUtils=new JdbcUtils();
@@ -18,8 +18,8 @@ public class UserDaoServer implements UserDaoService{
 		String sql="select * from userinfo where username = ? ";
 		List<Object> params=new ArrayList<Object>();
 		params.add(userName);
-		userinfo user;
-		user=jdbcUtils.findSimpleRefResult(sql, params, userinfo.class);
+		UserInfo user;
+		user=jdbcUtils.findSimpleRefResult(sql, params, UserInfo.class);
 		return user;
 	}
 
@@ -38,16 +38,16 @@ public class UserDaoServer implements UserDaoService{
 	}
 
 	@Override
-	public userinfo login(String userName, String userPassword) throws Exception {
+	public UserInfo login(String userName, String userPassword) throws Exception {
 		// TODO Auto-generated method stub
 		JdbcUtils jdbcUtils=new JdbcUtils();
 		jdbcUtils.getConnection();
-		String sql="select * from userinfo where username = ? and userpass = ?";
+		String sql="select * from userinfo where username = ? and password = ?";
 		List<Object> params=new ArrayList<Object>();
 		params.add(userName);
 		params.add(userPassword);
-		userinfo user;
-		user=jdbcUtils.findSimpleRefResult(sql, params, userinfo.class);
+		UserInfo user;
+		user=jdbcUtils.findSimpleRefResult(sql, params, UserInfo.class);
 		return user;
 	}
 }
