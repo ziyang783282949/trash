@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="holo_blue_light">#ff33b5e5</color>
+    <!-- 标题栏按钮背景颜色 -->
+    <drawable name="button_backward_pressed">#1C86EE</drawable>
+    <drawable name="button_backward_normal">#0000</drawable>
 </resources>
