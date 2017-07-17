@@ -47,18 +47,18 @@
         <activity
             android:name=".activity.StartActivity"
             android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.Location"
             android:label="@string/title_activity_location"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.UserProfile">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -64,4 +64,14 @@
         android:layout_toEndOf="@+id/checkBox"
         android:text="女" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_below="@+id/imageView3"
+        android:layout_marginTop="65dp"
+        android:text="TextView"
+        android:layout_alignEnd="@+id/editText" />
+
 </RelativeLayout>

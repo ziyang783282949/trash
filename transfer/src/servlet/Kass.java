@@ -55,9 +55,11 @@ public class Kass extends HttpServlet {
 			throws ServletException, IOException {
 		PrintWriter writer=response.getWriter();
 		request.setCharacterEncoding("utf-8");
-		String name=request.getParameter("name");
-		String pass=request.getParameter("password");
-		writer.write(name+"\n"+pass);
+		//String name=request.getParameter("name");
+		//String pass=request.getParameter("password");
+		String aString="{\"check\":\"1\"}";
+		System.out.println("asdsad");
+		writer.write(aString);
 		writer.flush();
 		writer.close();
 	}

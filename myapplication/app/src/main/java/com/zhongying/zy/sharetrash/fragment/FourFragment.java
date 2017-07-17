@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.activity.StartActivity;
 import com.zhongying.zy.sharetrash.activity.UserLogin;
+import com.zhongying.zy.sharetrash.activity.UserProfile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +52,7 @@ public class FourFragment extends Fragment implements View.OnClickListener{
                 break;
             }
             case R.id.zy:{
-                Toast.makeText(getContext(),"sdads",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), UserProfile.class));
                 break;
             }
         }
