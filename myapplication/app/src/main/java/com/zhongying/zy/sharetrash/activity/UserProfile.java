@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.BaseObserver;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.NetworkBaseActivity;
@@ -139,7 +140,11 @@ public class UserProfile extends NetworkBaseActivity {
         builder.addFormDataPart("imgfile", file.getName(), imageBody);//imgfile 后台接收图片流的参数名
 
         List<MultipartBody.Part> parts = builder.build().parts();
-        observable = RetroFactory.getInstance().uploadMemberIcon("Kass",parts);
+
+        UserInfo user=new UserInfo("z","y");
+        Gson gson =new Gson();
+        String route=gson.toJson(user);
+        observable = RetroFactory.getInstance().uploadMemberIcon("Kass",route,parts);
         observable.compose(composeFunction).subscribe(new BaseObserver<UserInfo>(this,pd) {
 
             @Override

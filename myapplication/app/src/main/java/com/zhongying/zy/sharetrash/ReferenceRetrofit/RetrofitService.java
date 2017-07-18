@@ -33,5 +33,6 @@ public interface RetrofitService {
      */
     @Multipart
     @POST("{config}")
-    Observable<BaseEntity<UserInfo>> uploadMemberIcon(@Path("config") String config,@Part List<MultipartBody.Part> partList);
+    Observable<BaseEntity<UserInfo>> uploadMemberIcon(@Path("config") String config,@Part("data") String des,@Part List<MultipartBody.Part> partList);
+
 }

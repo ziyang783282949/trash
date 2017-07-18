@@ -50,4 +50,10 @@ public class UserDaoServer implements UserDaoService{
 		user=jdbcUtils.findSimpleRefResult(sql, params, UserInfo.class);
 		return user;
 	}
+
+	@Override
+	public UserInfo modify(UserInfo userInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

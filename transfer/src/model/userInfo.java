@@ -12,7 +12,25 @@ public class UserInfo implements Serializable{
 	private Integer id;
 	private String username;
 	private String password;
+	//1ÎªÄÐ
+	private String sex;
+	private String urlusericon;
 	
+	
+	
+	
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public String getUrlusericon() {
+		return urlusericon;
+	}
+	public void setUrlusericon(String urlusericon) {
+		this.urlusericon = urlusericon;
+	}
 	public UserInfo() {
 		// TODO Auto-generated constructor stub
 	}
