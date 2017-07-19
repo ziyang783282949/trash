@@ -29,7 +29,7 @@ public class UserDaoServer implements UserDaoService{
 		// TODO Auto-generated method stub
 		JdbcUtils jdbcUtils=new JdbcUtils();
 		jdbcUtils.getConnection();
-		String sql = "insert into userinfo values (null, ?, ?)";
+		String sql = "insert into userinfo values (null, ?, ?,\"\",\"\")";
 		List<Object> params = new ArrayList<Object>();
 		params.add(userName);
 		params.add(userPassword);
@@ -52,8 +52,17 @@ public class UserDaoServer implements UserDaoService{
 	}
 
 	@Override
-	public UserInfo modify(UserInfo userInfo) throws Exception {
+	public boolean modify(UserInfo userInfo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		JdbcUtils jdbcUtils=new JdbcUtils();
+		jdbcUtils.getConnection();
+		String sql="update userinfo set sex = ?,urlusericon = ? where username = ?";
+		List<Object> params=new ArrayList<Object>();
+		params.add(userInfo.getSex());
+		params.add(userInfo.getUrlusericon());
+		params.add(userInfo.getUsername());
+		boolean flag=jdbcUtils.updateByPreparedStatement(sql, params);
+		
+		return flag;
 	}
 }

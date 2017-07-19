@@ -44,24 +44,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/sex"
-        android:layout_alignTop="@+id/checkBox"
+        android:layout_alignTop="@+id/man"
         android:layout_alignEnd="@+id/imageView" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/man"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText"
+        android:layout_marginTop="32dp"
+        android:text="男"
         android:layout_below="@+id/editText"
-        android:layout_marginTop="34dp"
-        android:text="男" />
+        android:layout_alignStart="@+id/editText"
+        android:checked="true"/>
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/woman"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/checkBox"
-        android:layout_toEndOf="@+id/checkBox"
+        android:layout_alignTop="@+id/man"
+        android:layout_toEndOf="@+id/man"
         android:text="女" />
 
     <TextView

@@ -9,6 +9,25 @@ import java.io.Serializable;
 public class UserInfo implements Serializable{
     private String username;
     private String password;
+    //1为男
+    private String sex;
+    private String urlusericon;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getUrlusericon() {
+        return urlusericon;
+    }
+
+    public void setUrlusericon(String urlusericon) {
+        this.urlusericon = urlusericon;
+    }
 
     public UserInfo() {
         super();
@@ -36,6 +55,13 @@ public class UserInfo implements Serializable{
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public UserInfo(String username, String password, String sex, String urlusericon) {
+        this.username = username;
+        this.password = password;
+        this.sex = sex;
+        this.urlusericon = urlusericon;
     }
 
     public UserInfo(String username, String password) {

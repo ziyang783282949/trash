@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +22,13 @@ import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.BaseObserver;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.NetworkBaseActivity;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.RetroFactory;
+import com.zhongying.zy.sharetrash.ReferenceRetrofit.SharedPreferencesUtils;
 import com.zhongying.zy.sharetrash.UserService.UserInfo;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -32,6 +37,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import static com.zhongying.zy.sharetrash.R.id.imageView;
+import static com.zhongying.zy.sharetrash.R.id.man;
 
 /**
  * Created by zy on 2017/7/16.
@@ -41,6 +47,9 @@ public class UserProfile extends NetworkBaseActivity {
     private ImageView imgShow = null;
     private TextView imgPath = null;
     private Observable observable;
+    private CheckBox man;
+    private CheckBox woman;
+    private boolean isman=true;
     private static final String IMAGE_UNSPECIFIED = "image/*";
     private final int IMAGE_CODE = 0; // 这里的IMAGE_CODE是自己任意定义的
     @Override
@@ -48,15 +57,23 @@ public class UserProfile extends NetworkBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.userprofile);
         initialButton();
+        initialInfomation();
+
+
+    }
+
+    private void initialInfomation() {
+
         setTitle("编辑个人信息");
         showBackwardView(R.string.text_back,true);
         showForwardView(R.string.text_forward, true);
-
     }
 
     private void initialButton() {
         imgShow= (ImageView) findViewById(R.id.picture);
         imgPath= (TextView) findViewById(R.id.textView3);
+        man= (CheckBox) findViewById(R.id.man);
+        woman= (CheckBox) findViewById(R.id.woman);
         showImage(imgShow);
     }
 
@@ -76,6 +93,14 @@ public class UserProfile extends NetworkBaseActivity {
     protected void onForward(View forwardView) {
         Toast.makeText(this, "提交", Toast.LENGTH_LONG).show();
         upLoad();
+    }
+    /**
+     * 返回按钮点击后触发
+     * @param backwardView
+     */
+    protected void onBackward(View backwardView) {
+        imgPath.setText(man.isChecked()+"");
+        //finish();
     }
     private void setImage1() {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
@@ -137,13 +162,33 @@ public class UserProfile extends NetworkBaseActivity {
                 .setType(MultipartBody.FORM);//表单类型
                 //.addFormDataPart(ParamKey.TOKEN, token);//ParamKey.TOKEN 自定义参数key常量类，即参数名
         RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        builder.addFormDataPart("imgfile", file.getName(), imageBody);//imgfile 后台接收图片流的参数名
+        builder.addFormDataPart("imgfile", "usericon"+file.getName().substring(file.getName().lastIndexOf(".")), imageBody);//imgfile 后台接收图片流的参数名
 
         List<MultipartBody.Part> parts = builder.build().parts();
 
-        UserInfo user=new UserInfo("z","y");
-        Gson gson =new Gson();
+        UserInfo user=new UserInfo();
+        String userinfo= (String) SharedPreferencesUtils.getParam(UserProfile.this,"String","");
+        Gson gson=new Gson();
+        UserInfo user2=new UserInfo();
+
+        user2=gson.fromJson(userinfo,UserInfo.class);
+        String username = "";
+        String password="";
+        try {
+             username=URLEncoder.encode(user2.getUsername(),"utf-8");
+            password=URLEncoder.encode(user2.getPassword(),"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        user.setUsername(username);
+        user.setPassword(password);
+        if(man.isChecked()){
+
+        }
+        user.setSex("1");
+        user.setUrlusericon(imgPath.getText().toString());
         String route=gson.toJson(user);
+        Log.i("info",route);
         observable = RetroFactory.getInstance().uploadMemberIcon("Kass",route,parts);
         observable.compose(composeFunction).subscribe(new BaseObserver<UserInfo>(this,pd) {
 

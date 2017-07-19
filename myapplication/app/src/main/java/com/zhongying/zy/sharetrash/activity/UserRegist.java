@@ -15,6 +15,7 @@ import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.BaseObserver;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.NetworkBaseActivity;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.RetroFactory;
+import com.zhongying.zy.sharetrash.ReferenceRetrofit.SharedPreferencesUtils;
 import com.zhongying.zy.sharetrash.UserService.UserInfo;
 
 import java.io.UnsupportedEncodingException;
@@ -66,7 +67,7 @@ public class UserRegist extends NetworkBaseActivity implements View.OnClickListe
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        UserInfo user=new UserInfo(newname,newpassword);
+        UserInfo user=new UserInfo(newname,newpassword,"","");
         Gson gson =new Gson();
         String route=gson.toJson(user);
         RequestBody body=RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),route);
@@ -75,12 +76,15 @@ public class UserRegist extends NetworkBaseActivity implements View.OnClickListe
             @Override
             public void onHandleSuccess(UserInfo userInfo) {
                 if(userInfo!=null) {
-                    SharedPreferences preferences=getSharedPreferences("user", Context.MODE_PRIVATE);
+                    /*SharedPreferences preferences=getSharedPreferences("user", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor=preferences.edit();
                     editor.putString("userinfo",userInfo.toString().substring(8));
-                    editor.commit();
+                    editor.commit();*/
+                    SharedPreferencesUtils.setParam(getApplication(),"String",userInfo.toString().substring(8));
                     Toast.makeText(getApplicationContext(),userInfo.toString(), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(),UserLogin.class));
+                    finish();
+                    System.exit(0);
                 } }
         });
     }

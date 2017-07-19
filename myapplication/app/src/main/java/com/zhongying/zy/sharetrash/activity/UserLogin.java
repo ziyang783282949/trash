@@ -16,6 +16,7 @@ import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.BaseObserver;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.NetworkBaseActivity;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.RetroFactory;
+import com.zhongying.zy.sharetrash.ReferenceRetrofit.SharedPreferencesUtils;
 import com.zhongying.zy.sharetrash.UserService.UserInfo;
 
 import java.io.UnsupportedEncodingException;
@@ -42,8 +43,9 @@ public class UserLogin extends NetworkBaseActivity implements View.OnClickListen
     }
 
     private void getPreUserInfo() {
-        SharedPreferences preferences=getSharedPreferences("user", Context.MODE_PRIVATE);
-        String userinfo=preferences.getString("userinfo","");
+        /*SharedPreferences preferences=getSharedPreferences("user", Context.MODE_PRIVATE);
+        String userinfo=preferences.getString("userinfo","");*/
+        String userinfo= (String) SharedPreferencesUtils.getParam(UserLogin.this,"String","");
         Gson gson=new Gson();
         UserInfo user2=new UserInfo();
         Log.i("info",userinfo);

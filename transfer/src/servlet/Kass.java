@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.ModifyService;
+import serviceimpl.ModyfySerser;
+
 import com.google.gson.Gson;
 import com.jspsmart.upload.SmartUpload;
 import com.jspsmart.upload.SmartUploadException;
@@ -61,36 +64,31 @@ public class Kass extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		ModifyService service=new ModyfySerser();
+		UserInfo userinfo = null;
+		try {
+			userinfo=service.Modify(this.getServletConfig(), request, response);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		PrintWriter writer=response.getWriter();
 		request.setCharacterEncoding("utf-8");
-		//String name=request.getParameter("name");
-		//String pass=request.getParameter("password");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out=response.getWriter();
-		
-		SmartUpload su=new SmartUpload();
-		su.initialize(this.getServletConfig(), request, response);
-		try {
-			su.upload();
-			su.save("G:\\work\\upload");
-		} catch (SmartUploadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String fuck=su.getRequest().getParameter("data");
-		fuck=fuck.replace("\\","");
-		fuck=fuck.substring(1,fuck.length()-1);
-		System.out.println(fuck);
-		
-		String aString="{\"check\":\"1\"}";
 		BaseEntity<UserInfo> baseEntity=new BaseEntity<UserInfo>();
-		baseEntity.setCode(1);
 		Gson gson=new Gson();
+		if(userinfo==null){
+			baseEntity.setCode(1);
+		}
+		else {
+			baseEntity.setCode(0);
+		}
 		System.out.println(gson.toJson(baseEntity).toString());
 		writer.write(gson.toJson(baseEntity).toString());
 		writer.flush();
 		writer.close();
+		
 	}
 
 	/**
