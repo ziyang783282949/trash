@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhongying.zy.sharetrash.R;
+import com.zhongying.zy.sharetrash.ReferenceRetrofit.SharedPreferencesUtils;
+import com.zhongying.zy.sharetrash.activity.UserLogin;
 
 import java.io.IOException;
 
@@ -36,7 +38,8 @@ public class ThreeFragment extends Fragment {
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getActivity(),"dasd",Toast.LENGTH_LONG).show();
+                String userinfo= (String) SharedPreferencesUtils.getParam(getContext(),"String","");
+                Toast.makeText(getActivity(),userinfo+"zy",Toast.LENGTH_LONG).show();
             }
         });
         return view;

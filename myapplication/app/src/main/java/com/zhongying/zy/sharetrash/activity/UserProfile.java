@@ -58,8 +58,6 @@ public class UserProfile extends NetworkBaseActivity {
         setContentView(R.layout.userprofile);
         initialButton();
         initialInfomation();
-
-
     }
 
     private void initialInfomation() {
@@ -110,50 +108,38 @@ public class UserProfile extends NetworkBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
-
-
         Bitmap bm = null;
-
         // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
-
         ContentResolver resolver = getContentResolver();
-
         if (requestCode == IMAGE_CODE) {
-
             try {
-
                 Uri originalUri = data.getData(); // 获得图片的uri
-
                 bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);
-
                 //imgShow.setImageBitmap(ThumbnailUtils.extractThumbnail(bm, 100, 100));  //使用系统的一个工具类，参数列表为 Bitmap Width,Height  这里使用压缩后显示，否则在华为手机上ImageView 没有显示
                 // 显得到bitmap图片
                 imgShow.setImageBitmap(bm);
-
                 String[] proj = { MediaStore.Images.Media.DATA };
-
                 // 好像是android多媒体数据库的封装接口，具体的看Android文档
-                Cursor cursor = managedQuery(originalUri, proj, null, null, null);
+                Cursor c=null;
+                if(originalUri.getScheme().equals("content")) {//判断uri地址是以什么开头的
+                    c= resolver.query(originalUri, null, null, null, null);
+                }else{
+                    c= resolver.query(getFileUri(originalUri), null, null, null, null);//红色字体判断地址如果以file开头
+                }
+                c.moveToFirst();
+                int colunm_index = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                String srcPath = c.getString(colunm_index);
+                //这是获取的图片保存在sdcard中的位置
 
-                // 按我个人理解 这个是获得用户选择的图片的索引值
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                // 将光标移至开头 ，这个很重要，不小心很容易引起越界
-                cursor.moveToFirst();
-                // 最后根据索引值获取图片路径
-                String path = cursor.getString(column_index);
-                imgPath.setText(path);
+                imgPath.setText(srcPath);
             } catch (IOException e) {
                 Log.e("TAG-->Error", e.toString());
-
             }
-
             finally {
                 return;
             }
         }
-
         super.onActivityResult(requestCode, resultCode, data);
-
     }
     private void upLoad() {
         File file = new File(imgPath.getText().toString());//filePath 图片地址
@@ -185,7 +171,7 @@ public class UserProfile extends NetworkBaseActivity {
         if(man.isChecked()){
 
         }
-        user.setSex("1");
+        user.setSex(man.isChecked()?"1":"0");
         user.setUrlusericon(imgPath.getText().toString());
         String route=gson.toJson(user);
         Log.i("info",route);
@@ -198,5 +184,46 @@ public class UserProfile extends NetworkBaseActivity {
             }
         });
 
+    }
+    public Uri getFileUri(Uri uri){
+        if (uri.getScheme().equals("file")) {
+            String path = uri.getEncodedPath();
+            String TAG="info";
+            Log.d(TAG, "path1 is " + path);
+            if (path != null) {
+                path = Uri.decode(path);
+                Log.d(TAG, "path2 is " + path);
+                ContentResolver cr = this.getContentResolver();
+                StringBuffer buff = new StringBuffer();
+                buff.append("(")
+                        .append(MediaStore.Images.ImageColumns.DATA)
+                        .append("=")
+                        .append("'" + path + "'")
+                        .append(")");
+                Cursor cur = cr.query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        new String[] { MediaStore.Images.ImageColumns._ID },
+                        buff.toString(), null, null);
+                int index = 0;
+                for (cur.moveToFirst(); !cur.isAfterLast(); cur
+                        .moveToNext()) {
+                    index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
+                    // set _id value
+                    index = cur.getInt(index);
+                }
+                if (index == 0) {
+                    //do nothing
+                } else {
+                    Uri uri_temp = Uri
+                            .parse("content://media/external/images/media/"
+                                    + index);
+                    Log.d(TAG, "uri_temp is " + uri_temp);
+                    if (uri_temp != null) {
+                        uri = uri_temp;
+                    }
+                }
+            }
+        }
+        return uri;
     }
 }

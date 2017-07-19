@@ -67,9 +67,11 @@ public class ModyfySerser implements ModifyService{
 			e1.printStackTrace();
 		}
 		UserInfo info=JsonToUser(UserString);
-		info.setUrlusericon("E:\\software\\work\\upload\\"+info.getUrlusericon().substring(info.getUrlusericon().lastIndexOf("/")+1));
+		//info.setUrlusericon("E:\\software\\work\\upload\\"+info.getUrlusericon().substring(info.getUrlusericon().lastIndexOf("/")+1));
+		info.setUrlusericon("G:\\work\\upload\\"+info.getUrlusericon().substring(info.getUrlusericon().lastIndexOf("/")+1));
 		System.out.println(new Gson().toJson(info).toString());
-		String urlusericon="E:\\software\\work\\upload\\"+info.getUsername();
+		//String urlusericon="E:\\software\\work\\upload\\"+info.getUsername();
+		String urlusericon="G:\\work\\upload\\"+info.getUsername();
 		File file=new File(urlusericon);
 		if(!file.exists()){
 			file.mkdir();

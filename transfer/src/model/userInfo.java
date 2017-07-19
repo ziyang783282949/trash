@@ -15,10 +15,31 @@ public class UserInfo implements Serializable{
 	//1ÎªÄÐ
 	private String sex;
 	private String urlusericon;
+	private Integer credits;
+	private Integer change_credits;
+	private Integer contribution_credits;
 	
 	
 	
 	
+	public Integer getCredits() {
+		return credits;
+	}
+	public void setCredits(Integer credits) {
+		this.credits = credits;
+	}
+	public Integer getChange_credits() {
+		return change_credits;
+	}
+	public void setChange_credits(Integer change_credits) {
+		this.change_credits = change_credits;
+	}
+	public Integer getContribution_credits() {
+		return contribution_credits;
+	}
+	public void setContribution_credits(Integer contribution_credits) {
+		this.contribution_credits = contribution_credits;
+	}
 	public String getSex() {
 		return sex;
 	}

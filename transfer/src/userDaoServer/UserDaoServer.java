@@ -29,7 +29,7 @@ public class UserDaoServer implements UserDaoService{
 		// TODO Auto-generated method stub
 		JdbcUtils jdbcUtils=new JdbcUtils();
 		jdbcUtils.getConnection();
-		String sql = "insert into userinfo values (null, ?, ?,\"\",\"\")";
+		String sql = "insert into userinfo values (null, ?, ?,\"\",\"\",0,0,0)";
 		List<Object> params = new ArrayList<Object>();
 		params.add(userName);
 		params.add(userPassword);

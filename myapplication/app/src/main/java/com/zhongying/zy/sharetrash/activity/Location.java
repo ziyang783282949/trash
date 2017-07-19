@@ -161,7 +161,7 @@ public class Location extends AppCompatActivity implements LocationSource,AMapLo
                     //设置缩放级别
                     aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
                     //将地图移动到定位点
-                    aMapLocation=fromGpsToAmap(aMapLocation);
+                    //aMapLocation=fromGpsToAmap(aMapLocation);
                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())));
                     //点击定位按钮 能够将地图的中心移动到定位点
                     mListener.onLocationChanged(aMapLocation);
