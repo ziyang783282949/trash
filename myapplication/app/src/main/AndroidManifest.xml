@@ -60,6 +60,10 @@
         <activity android:name=".activity.UserProfile">
 
         </activity>
+        <activity android:name=".activity.creditPackages.Credit"
+            android:theme="@style/AppTheme">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.zhongying.zy.sharetrash.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.zhongying.zy.sharetrash.R;
 import com.zhongying.zy.sharetrash.ReferenceRetrofit.SharedPreferencesUtils;
 import com.zhongying.zy.sharetrash.activity.UserLogin;
+import com.zhongying.zy.sharetrash.activity.creditPackages.Credit;
 
 import java.io.IOException;
 
@@ -38,8 +40,9 @@ public class ThreeFragment extends Fragment {
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userinfo= (String) SharedPreferencesUtils.getParam(getContext(),"String","");
-                Toast.makeText(getActivity(),userinfo+"zy",Toast.LENGTH_LONG).show();
+                //String userinfo= (String) SharedPreferencesUtils.getParam(getContext(),"String","");
+                //Toast.makeText(getActivity(),userinfo+"zy",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), Credit.class));
             }
         });
         return view;
