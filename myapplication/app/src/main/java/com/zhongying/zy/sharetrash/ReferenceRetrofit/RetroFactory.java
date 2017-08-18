@@ -13,7 +13,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroFactory {
-    private static String baseUrl = "http://ds8gyc.natappfree.cc/transfer/servlet/";
+    private static String baseUrl = "http://fchieg.natappfree.cc/porkerticket/";
     //private static String baseUrl = "http://wh4pbz.natappfree.cc/transfer/servlet/";
     private RetroFactory() {
     }

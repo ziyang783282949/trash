@@ -19,7 +19,9 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RetrofitService {
-
+    /**
+     * 用户登录
+     */
     @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST("{config}")
     Observable<BaseEntity<UserInfo>> Login(@Path("config") String config, @Body RequestBody user);

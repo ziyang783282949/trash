@@ -59,14 +59,14 @@ public class UserLogin extends NetworkBaseActivity implements View.OnClickListen
     private void getUsers() {
         String name = username.getText().toString();
         String pass = password.getText().toString();
-        String newname="";
-        String newpassword="";
-        try {
+        String newname=name;
+        String newpassword=pass;
+       /* try {
             newname= URLEncoder.encode(name,"utf-8");
             newpassword=URLEncoder.encode(pass,"utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
+        }*/
         UserInfo user=new UserInfo(newname,newpassword);
         Gson gson =new Gson();
         String route=gson.toJson(user);
